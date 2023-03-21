@@ -27,7 +27,7 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <ComboBox fx:id="cbmLanguage" onAction="#selectLanguage" prefWidth="150.0" promptText="Select" />
+                  <ComboBox fx:id="cbmLanguage" prefWidth="150.0" promptText="Select" />
                </children>
             </HBox>
             <TextArea fx:id="txtinput" prefHeight="200.0" prefWidth="200.0" promptText="Insert phrase">

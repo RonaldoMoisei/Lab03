@@ -23,7 +23,7 @@ public class RichWord {
 	public void setCorretto(boolean corretto) {
 		this.corretto = corretto;
 	}
-	
+
 	
 
 }

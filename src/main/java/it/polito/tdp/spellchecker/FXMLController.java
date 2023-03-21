@@ -1,9 +1,12 @@
 package it.polito.tdp.spellchecker;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.spellchecker.model.Dictionary;
+import it.polito.tdp.spellchecker.model.RichWord;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,10 +15,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 public class FXMLController {
-	private Dictionary dictionary;
+	private Dictionary dic;
 
 	public void setModel(Dictionary dictionary) {
-		this.dictionary = dictionary;
+		this.dic = dictionary;
 	}
 
     @FXML
@@ -47,18 +50,53 @@ public class FXMLController {
 
     @FXML
     void doClear(ActionEvent event) {
-
+        txtinput.setText("");
+        txtOutput.setText("");
+        txtNErrors.setText("");
+        txtTimeProcess.setText("");
     }
 
     @FXML
     void doSpell(ActionEvent event) {
+        if (cbmLanguage.getValue().equals("Italiano")) {
+            dic.loadDictionary("Italiano.txt");
+        } else if (cbmLanguage.getValue().equals("English")) {
+            dic.loadDictionary("English.txt");
+        }
 
+        // Trasformo txtInput in una lista di parole
+        String[] words = txtinput.getText().split(" ");
+        List<String> inputTextList = Arrays.asList(words);
+
+        // Calcolo il tempo di inizio dell'esecuzione
+        long startTime = System.currentTimeMillis();
+
+        // Controllo ortografico del testo
+        List<RichWord> results = dic.spellCheckText(inputTextList);
+
+        // Calcolo il tempo di fine dell'esecuzione
+        long endTime = System.currentTimeMillis();
+
+        // Calcolo il tempo di esecuzione in millisecondi
+        long executionTime = endTime - startTime;
+
+        // Aggiorno la GUI con i risultati
+        String wrongWords = "";
+        int numErrors = 0;
+        for (RichWord rw : results) {
+            if (!rw.isCorretto()) {
+                wrongWords += rw.getParole() + " ";
+                numErrors++;
+            }
+        }
+        txtOutput.setText(wrongWords);
+        txtNErrors.setText(Integer.toString(numErrors));
+        txtTimeProcess.setText(Long.toString(executionTime) + " ms");
     }
 
-    @FXML
-    void selectLanguage(ActionEvent event) {
 
-    }
+
+
 
     @FXML
     void initialize() {
