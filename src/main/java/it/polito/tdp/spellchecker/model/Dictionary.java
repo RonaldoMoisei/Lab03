@@ -34,4 +34,14 @@ public class Dictionary {
         return result;
     }
 
+	public Set<String> getDictionary() {
+		return dictionary;
+	}
+
+	public void setDictionary(Set<String> dictionary) {
+		this.dictionary = dictionary;
+	}
+    
+    
+
 }
