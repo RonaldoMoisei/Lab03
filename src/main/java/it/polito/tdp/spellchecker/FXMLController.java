@@ -55,30 +55,29 @@ public class FXMLController {
         txtNErrors.setText("");
         txtTimeProcess.setText("");
     }
+    
+    Long calcolaTime() {
+		return  System.nanoTime();
+    	
+    }
 
     @FXML
     void doSpell(ActionEvent event) {
         if (cbmLanguage.getValue().equals("Italiano")) {
-            dic.loadDictionary("Italiano.txt");
+            dic.loadDictionary("Italian.txt");
         } else if (cbmLanguage.getValue().equals("English")) {
             dic.loadDictionary("English.txt");
         }
 
         // Trasformo txtInput in una lista di parole
-        String[] words = txtinput.getText().split(" ");
+        String[] words = txtinput.getText().replaceAll("[.,\\/#!$%\\^&\\*;:?{}=\\-_`~()\\[\\]\"]", "").split("\\s+");
         List<String> inputTextList = Arrays.asList(words);
 
-        // Calcolo il tempo di inizio dell'esecuzione
-        long startTime = System.currentTimeMillis();
+       
 
         // Controllo ortografico del testo
         List<RichWord> results = dic.spellCheckText(inputTextList);
 
-        // Calcolo il tempo di fine dell'esecuzione
-        long endTime = System.currentTimeMillis();
-
-        // Calcolo il tempo di esecuzione in millisecondi
-        long executionTime = endTime - startTime;
 
         // Aggiorno la GUI con i risultati
         String wrongWords = "";
@@ -90,8 +89,8 @@ public class FXMLController {
             }
         }
         txtOutput.setText(wrongWords);
-        txtNErrors.setText(Integer.toString(numErrors));
-        txtTimeProcess.setText(Long.toString(executionTime) + " ms");
+        txtNErrors.setText("Numero di parole sbagliate:" + Integer.toString(numErrors));
+        txtTimeProcess.setText("Time to process: " + Long.toString(calcolaTime()) + " ms");
     }
 
 
@@ -108,6 +107,7 @@ public class FXMLController {
         assert txtTimeProcess != null : "fx:id=\"txtTimeProcess\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtinput != null : "fx:id=\"txtinput\" was not injected: check your FXML file 'Scene.fxml'.";
 
+        dic = new Dictionary();
         cbmLanguage.getItems().add("English");
         cbmLanguage.getItems().add("Italiano");
     }

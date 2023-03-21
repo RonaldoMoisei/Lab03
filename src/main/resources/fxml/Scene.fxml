@@ -62,7 +62,7 @@
             </TextArea>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="txtNErrors" prefHeight="18.0" prefWidth="238.0">
+                  <Label fx:id="txtNErrors" prefHeight="18.0" prefWidth="238.0" textAlignment="RIGHT">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -74,7 +74,10 @@
                   </Button>
                </children>
             </HBox>
-            <Label fx:id="txtTimeProcess" prefHeight="18.0" prefWidth="309.0" />
+            <Label fx:id="txtTimeProcess" prefHeight="18.0" prefWidth="286.0">
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" />
+               </VBox.margin></Label>
          </children>
       </VBox>
    </center>

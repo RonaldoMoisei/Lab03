@@ -9,24 +9,26 @@ public class Dictionary {
 
     public void loadDictionary(String language) {
         dictionary = new HashSet<>();
-        try { 
-            FileReader fr = new FileReader(language); 
-            BufferedReader br = new BufferedReader(fr); 
-            String word; 
-            while ((word = br.readLine()) != null) { 
-                dictionary.add(word.toLowerCase()); 
-            } 
-            br.close(); 
-        } catch (IOException e){ 
-            System.out.println("Errore nella lettura del file"); 
+        try {
+            InputStream in = getClass().getResourceAsStream("/" + language);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String word;
+            while ((word = br.readLine()) != null) {
+                dictionary.add(word.toLowerCase());
+            }
+            br.close();
+        } catch (IOException e){
+            System.out.println("Errore nella lettura del file");
         }
     }
+
 
     public List<RichWord> spellCheckText(List<String> inputTextList) {
         List<RichWord> result = new ArrayList<>();
         
         for (String word : inputTextList) {
-            boolean isCorrect = dictionary.contains(word.toLowerCase());
+        	word = word.toLowerCase();
+            boolean isCorrect = dictionary.contains(word);
             RichWord richWord = new RichWord(word, isCorrect);
             result.add(richWord);
         }
